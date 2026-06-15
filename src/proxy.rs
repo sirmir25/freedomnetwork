@@ -1,24 +1,23 @@
-//! SOCKS5 + HTTP CONNECT proxy server with built-in DPI bypass.
+//! SOCKS5 + HTTP CONNECT proxy server with DPI bypass via C++ native library.
 //!
-//! Architecture:
-//!   App/Browser → SOCKS5 (or HTTP CONNECT) on localhost:1080
-//!     → DoH DNS resolution
-//!     → TCP connect with TCP_NODELAY
-//!     → TLS record fragmentation (ClientHello split into 2 TLS records)
-//!     → bidirectional relay to real server
+//! All heavy lifting (TLS parsing, HTTP mangling) is delegated to the
+//! C++ `bypass_core` library through `crate::ffi`.
 
-use std::{net::SocketAddr, sync::Arc};
+use std::{net::SocketAddr, sync::Arc, time::Duration};
 
 use anyhow::Result;
 use tokio::{
     io::{AsyncReadExt, AsyncWriteExt},
     net::{TcpListener, TcpStream},
+    time::timeout,
 };
 use tracing::{debug, info, warn};
 
-use crate::{doh::Doh, http, tls};
+use crate::{anon, doh::Doh, ffi};
 
-const CHUNK: usize = 65536;
+const CHUNK:           usize    = 65536;
+const CONNECT_TIMEOUT: Duration = Duration::from_secs(10);
+const FIRST_READ_TIMEOUT: Duration = Duration::from_secs(10);
 
 pub struct ProxyConfig {
     pub listen: SocketAddr,
@@ -28,57 +27,58 @@ pub async fn serve(cfg: ProxyConfig) -> Result<()> {
     let listener = TcpListener::bind(cfg.listen).await?;
     let doh = Arc::new(Doh::new()?);
 
-    println!("\n  FreedomNet DPI Bypass Proxy");
-    println!("  ─────────────────────────────────────────────────");
-    println!("  Listening on  {}", cfg.listen);
-    println!("  Protocol      SOCKS5 + HTTP CONNECT");
-    println!("  Techniques    DoH DNS · TLS record split · HTTP mangling");
+    println!("\n  FreedomNet DPI Bypass Proxy  [native core {}]",
+             ffi::native_version());
+    println!("  ──────────────────────────────────────────────────────");
+    println!("  Listen   {}", cfg.listen);
+    println!("  Protocol SOCKS5 + HTTP CONNECT");
+    println!("  Bypass   DoH DNS  ·  C++ TLS record split  ·  C++ HTTP mangle");
     println!();
-    println!("  Browser proxy setting (pick one):");
-    println!("    SOCKS5    127.0.0.1   port {}", cfg.listen.port());
-    println!("    HTTP      127.0.0.1   port {}", cfg.listen.port());
-    println!();
+    println!("  Set browser proxy to  SOCKS5  {}  port {}",
+             cfg.listen.ip(), cfg.listen.port());
+    println!("                   or  HTTP     {}  port {}",
+             cfg.listen.ip(), cfg.listen.port());
     println!("  Press Ctrl+C to stop.");
-    println!("  ─────────────────────────────────────────────────\n");
+    println!("  ──────────────────────────────────────────────────────\n");
 
     loop {
         let (stream, peer) = listener.accept().await?;
+        debug!("← {}", peer);
         let doh = Arc::clone(&doh);
-        debug!("New connection from {}", peer);
         tokio::spawn(async move {
-            if let Err(e) = handle(stream, doh).await {
-                debug!("Connection error: {}", e);
+            if let Err(e) = dispatch(stream, doh).await {
+                debug!("connection error: {}", e);
             }
         });
     }
 }
 
-async fn handle(mut stream: TcpStream, doh: Arc<Doh>) -> Result<()> {
+// ── Protocol dispatcher ───────────────────────────────────────────────────────
+
+async fn dispatch(mut s: TcpStream, doh: Arc<Doh>) -> Result<()> {
     let mut first = [0u8; 1];
-    stream.read_exact(&mut first).await?;
+    s.read_exact(&mut first).await?;
 
     match first[0] {
-        0x05 => handle_socks5(stream, doh).await,
-        _    => handle_http_connect(stream, first[0], doh).await,
+        0x05 => socks5(s, doh).await,
+        _    => http_connect(s, first[0], doh).await,
     }
 }
 
-// ── SOCKS5 ────────────────────────────────────────────────────────────────────
+// ── SOCKS5 (RFC 1928) ─────────────────────────────────────────────────────────
 
-async fn handle_socks5(mut s: TcpStream, doh: Arc<Doh>) -> Result<()> {
-    // Greeting: consumed version byte, read nmethods + methods
-    let mut buf = [0u8; 1];
-    s.read_exact(&mut buf).await?;
-    let nmethods = buf[0] as usize;
-    let mut methods = vec![0u8; nmethods];
-    s.read_exact(&mut methods).await?;
+async fn socks5(mut s: TcpStream, doh: Arc<Doh>) -> Result<()> {
+    // Greeting — version byte already consumed
+    let nmethods = s.read_u8().await? as usize;
+    let mut _methods = vec![0u8; nmethods];
+    s.read_exact(&mut _methods).await?;
+    s.write_all(b"\x05\x00").await?; // no-auth
 
-    s.write_all(b"\x05\x00").await?; // no auth
-
-    // Request header
+    // Request
     let mut hdr = [0u8; 4];
     s.read_exact(&mut hdr).await?;
-    let (_ver, cmd, _rsv, atyp) = (hdr[0], hdr[1], hdr[2], hdr[3]);
+    let cmd  = hdr[1];
+    let atyp = hdr[3];
 
     if cmd != 0x01 {
         s.write_all(b"\x05\x07\x00\x01\x00\x00\x00\x00\x00\x00").await?;
@@ -91,10 +91,9 @@ async fn handle_socks5(mut s: TcpStream, doh: Arc<Doh>) -> Result<()> {
             s.read_exact(&mut ip).await?;
             std::net::Ipv4Addr::from(ip).to_string()
         }
-        0x03 => { // Domain name
-            let mut len = [0u8; 1];
-            s.read_exact(&mut len).await?;
-            let mut name = vec![0u8; len[0] as usize];
+        0x03 => { // Domain
+            let n = s.read_u8().await? as usize;
+            let mut name = vec![0u8; n];
             s.read_exact(&mut name).await?;
             String::from_utf8(name)?
         }
@@ -121,94 +120,103 @@ async fn handle_socks5(mut s: TcpStream, doh: Arc<Doh>) -> Result<()> {
 
 // ── HTTP CONNECT ──────────────────────────────────────────────────────────────
 
-async fn handle_http_connect(mut s: TcpStream, first: u8, doh: Arc<Doh>) -> Result<()> {
-    let mut rest = Vec::with_capacity(512);
-    rest.push(first);
+async fn http_connect(mut s: TcpStream, first: u8, doh: Arc<Doh>) -> Result<()> {
+    let mut buf = vec![first];
 
-    // Read until blank line
-    let mut buf = [0u8; 1];
+    // Read until \r\n\r\n
     loop {
-        s.read_exact(&mut buf).await?;
-        rest.push(buf[0]);
-        if rest.ends_with(b"\r\n\r\n") {
-            break;
-        }
-        if rest.len() > 8192 {
-            anyhow::bail!("HTTP request too large");
-        }
+        let b = s.read_u8().await?;
+        buf.push(b);
+        if buf.ends_with(b"\r\n\r\n") { break; }
+        if buf.len() > 8192 { anyhow::bail!("HTTP CONNECT header too large"); }
     }
 
-    let request_line = std::str::from_utf8(rest.split(|&b| b == b'\n').next().unwrap_or(&[]))?
-        .trim();
-    let parts: Vec<&str> = request_line.split_whitespace().collect();
+    let req_line = buf.split(|&b| b == b'\n').next().unwrap_or(&[]);
+    let req_line = req_line.strip_suffix(b"\r").unwrap_or(req_line);
+    let parts: Vec<&str> = std::str::from_utf8(req_line)?.split_whitespace().collect();
 
     if parts.len() < 2 || !parts[0].eq_ignore_ascii_case("CONNECT") {
         return Ok(());
     }
 
-    let hostport = parts[1];
-    let (host, port) = if let Some((h, p)) = hostport.rsplit_once(':') {
-        (h.to_string(), p.parse::<u16>().unwrap_or(443))
-    } else {
-        (hostport.to_string(), 443)
-    };
-
+    let (host, port) = parse_hostport(parts[1])?;
     s.write_all(b"HTTP/1.1 200 Connection established\r\n\r\n").await?;
 
     info!("CONNECT {}:{}", host, port);
     tunnel(s, &host, port, doh).await
 }
 
-// ── DPI-bypass tunnel ─────────────────────────────────────────────────────────
+fn parse_hostport(hp: &str) -> Result<(String, u16)> {
+    match hp.rsplit_once(':') {
+        Some((h, p)) => Ok((h.to_string(), p.parse()?)),
+        None         => Ok((hp.to_string(), 443)),
+    }
+}
+
+// ── DPI bypass tunnel ─────────────────────────────────────────────────────────
 
 async fn tunnel(mut client: TcpStream, host: &str, port: u16, doh: Arc<Doh>) -> Result<()> {
-    // DNS via DoH
+    // ① Resolve via DoH — bypasses ISP DNS
     let ip = match doh.resolve(host).await {
         Some(ip) => ip,
-        None => {
-            warn!("DNS failed: {}", host);
-            return Ok(());
-        }
+        None     => { warn!("DoH failed: {}", host); return Ok(()); }
     };
 
-    // Connect with TCP_NODELAY to ensure each write() = one TCP segment
-    let mut server = TcpStream::connect(SocketAddr::new(ip, port)).await?;
+    // ② Connect — TCP_NODELAY ensures each write() lands in its own TCP segment
+    let server = match timeout(CONNECT_TIMEOUT, TcpStream::connect(SocketAddr::new(ip, port))).await {
+        Ok(Ok(s)) => s,
+        Ok(Err(e)) => { warn!("connect {}:{} → {}", host, port, e); return Ok(()); }
+        Err(_)    => { warn!("connect {}:{} timed out", host, port); return Ok(()); }
+    };
     server.set_nodelay(true)?;
 
-    // Read first payload from browser (TLS ClientHello or raw HTTP)
-    let mut first = vec![0u8; CHUNK];
-    let n = tokio::time::timeout(
-        std::time::Duration::from_secs(10),
-        client.read(&mut first),
-    ).await??;
+    // ③ Read first payload (TLS ClientHello or raw HTTP)
+    let mut buf = vec![0u8; CHUNK];
+    let n = match timeout(FIRST_READ_TIMEOUT, client.read(&mut buf)).await {
+        Ok(Ok(n)) if n > 0 => n,
+        _                  => return Ok(()),
+    };
+    let first = &buf[..n];
 
-    if n == 0 {
-        return Ok(());
-    }
-    let first = &first[..n];
+    // ④ Apply C++ bypass logic — two separate write_all() + TCP_NODELAY → two segments
+    let (mut server_w, server_r) = {
+        let (r, w) = tokio::io::split(server);
+        (w, r)
+    };
 
-    // Apply bypass technique
-    if tls::is_client_hello(first) {
-        let (r1, r2) = tls::split_into_records(first);
-        debug!("TLS record-split {}:{} → {}B + {}B", host, port, r1.len(), r2.len());
-        // Two separate write_all() calls + TCP_NODELAY → two TCP segments
-        server.write_all(&r1).await?;
-        server.write_all(&r2).await?;
-    } else if http::is_http(first) {
-        server.write_all(&http::mangle(first)).await?;
+    if ffi::is_client_hello(first) {
+        match ffi::tls_split(first) {
+            Some((r1, r2)) => {
+                debug!("TLS split {}:{} → {}B + {}B", host, port, r1.len(), r2.len());
+                server_w.write_all(&r1).await?;
+                server_w.write_all(&r2).await?;
+            }
+            None => {
+                server_w.write_all(first).await?;
+            }
+        }
+    } else if anon::is_http(first) {
+        // C++ DPI mangle + Rust anonymity layer (strip IPs, normalise UA)
+        let mangled = ffi::mangle_http(first);
+        let sanitized = anon::sanitize_http(&mangled);
+        debug!("HTTP {}:{} {}B → mangle {}B → sanitize {}B",
+               host, port, first.len(), mangled.len(), sanitized.len());
+        server_w.write_all(&sanitized).await?;
     } else {
-        server.write_all(first).await?;
+        server_w.write_all(first).await?;
     }
 
-    // Bidirectional relay (efficient tokio copy)
-    let (mut cr, mut cw) = client.into_split();
-    let (mut sr, mut sw) = server.into_split();
+    // ⑤ Bidirectional relay
+    let (client_r, mut client_w) = tokio::io::split(client);
 
     let c2s = tokio::spawn(async move {
-        let _ = tokio::io::copy(&mut cr, &mut sw).await;
+        let _ = tokio::io::copy(&mut tokio::io::BufReader::new(client_r), &mut server_w).await;
     });
     let s2c = tokio::spawn(async move {
-        let _ = tokio::io::copy(&mut sr, &mut cw).await;
+        let _ = tokio::io::copy(
+            &mut tokio::io::BufReader::new(server_r),
+            &mut client_w,
+        ).await;
     });
 
     let _ = tokio::join!(c2s, s2c);
