@@ -1,10 +1,10 @@
+mod anon;
 mod doh;
-mod http;
+mod ffi;
+mod pac;
 mod proxy;
-mod tls;
-mod vpn;
 
-use std::{net::SocketAddr, path::PathBuf};
+use std::{net::SocketAddr, process::Command};
 
 use anyhow::Result;
 use clap::{Parser, Subcommand};
@@ -14,115 +14,69 @@ use tracing_subscriber::EnvFilter;
 
 #[derive(Parser)]
 #[command(
-    name = "fn",
-    about = "FreedomNet — DPI bypass proxy + VPN config generator",
-    long_about = "
-FreedomNet bypasses internet censorship without a VPN server or IP change.
+    name  = "fn",
+    about = "FreedomNet — DPI bypass + anonymity proxy + VPN config generator",
+    long_about = "\
+FreedomNet bypasses internet censorship locally. No VPN server or remote relay
+needed for proxy mode.
 
-PROXY MODE  (default):
-  Runs a local SOCKS5 + HTTP proxy. Set your browser to SOCKS5 127.0.0.1:1080.
-  Techniques: DoH DNS · TLS record fragmentation · HTTP header mangling
-  Works against: Russia TSPU, Iran DPI, China GFW keyword blocking.
+PROXY (default)  →  fn [--listen 127.0.0.1:1080]
+  SOCKS5 + HTTP proxy with:
+  • C++ TLS record fragmentation (bypasses Russia TSPU, Iran IRIAMAN, China GFW)
+  • C++ HTTP header case-mangling
+  • Rust anonymity layer: strips X-Real-IP / Forwarded / Via, normalises UA
+  • DNS over HTTPS (Cloudflare → Google → Quad9 fallback)
+  • Optional PAC file server for zero-click browser auto-config
 
-VPN MODE:
-  Generates ready-to-use client config files for OpenVPN / WireGuard / Shadowsocks.
-  You need your own server outside the censored country.
-",
+VPN CONFIG  →  fn vpn <openvpn|wireguard|shadowsocks> [options]
+  Generates client configs. Requires fn-vpn (D binary):
+    cd vpngen && dub build -b release
+
+SUPPORTED CENSORSHIP SYSTEMS:
+  Russia TSPU/Echelon · Iran IRIAMAN · China GFW · Kazakhstan DPI · Belarus",
     version
 )]
 struct Cli {
     #[command(subcommand)]
     command: Option<Cmd>,
 
-    /// Listen address for proxy mode
-    #[arg(long, default_value = "127.0.0.1:1080")]
+    /// SOCKS5 / HTTP proxy listen address
+    #[arg(long, default_value = "127.0.0.1:1080", global = true)]
     listen: SocketAddr,
 
-    /// Enable verbose debug logging
-    #[arg(long, short)]
+    /// Also serve a PAC file for zero-click browser auto-config
+    #[arg(long, default_value = "127.0.0.1:8085")]
+    pac_listen: SocketAddr,
+
+    /// Disable PAC file server
+    #[arg(long)]
+    no_pac: bool,
+
+    /// Verbose debug logging
+    #[arg(long, short, global = true)]
     debug: bool,
 }
 
 #[derive(Subcommand)]
 enum Cmd {
-    /// Run DPI bypass proxy (default mode)
+    /// Run DPI bypass proxy (default when no subcommand given)
     Proxy {
         #[arg(long, default_value = "127.0.0.1:1080")]
         listen: SocketAddr,
+        #[arg(long, default_value = "127.0.0.1:8085")]
+        pac_listen: SocketAddr,
+        #[arg(long)]
+        no_pac: bool,
     },
 
-    /// Generate VPN client configs
+    /// Generate VPN client config (delegates to fn-vpn D binary)
     Vpn {
-        #[command(subcommand)]
-        vpn: VpnCmd,
-    },
-}
-
-#[derive(Subcommand)]
-enum VpnCmd {
-    /// Generate OpenVPN client config (.ovpn)
-    Openvpn {
-        /// VPN server hostname or IP
-        #[arg(long)]
-        server: String,
-
-        /// VPN server port
-        #[arg(long, default_value_t = 1194)]
-        port: u16,
-
-        /// Use TCP instead of UDP
-        #[arg(long)]
-        tcp: bool,
-
-        /// Output file path
-        #[arg(long, default_value = "client.ovpn")]
-        out: PathBuf,
-    },
-
-    /// Generate WireGuard client config (.conf)
-    Wireguard {
-        /// Server endpoint as host:port
-        #[arg(long)]
-        server: String,
-
-        /// Server WireGuard public key (base64)
-        #[arg(long)]
-        pubkey: String,
-
-        /// Client tunnel IP (assigned by server admin)
-        #[arg(long, default_value = "10.0.0.2/32")]
-        address: String,
-
-        /// DNS server to use inside the tunnel
-        #[arg(long, default_value = "1.1.1.1")]
-        dns: String,
-
-        /// Output file path
-        #[arg(long, default_value = "wg0.conf")]
-        out: PathBuf,
-    },
-
-    /// Generate Shadowsocks client config (JSON)
-    Shadowsocks {
-        /// Server hostname or IP
-        #[arg(long)]
-        server: String,
-
-        /// Server port
-        #[arg(long, default_value_t = 8388)]
-        port: u16,
-
-        /// Password
-        #[arg(long)]
-        password: String,
-
-        /// Cipher method
-        #[arg(long, default_value = "aes-256-gcm")]
-        method: String,
-
-        /// Output file path
-        #[arg(long, default_value = "ss-config.json")]
-        out: PathBuf,
+        /// VPN type: openvpn | wireguard | shadowsocks
+        #[arg(value_name = "TYPE")]
+        vpn_type: String,
+        /// Remaining arguments forwarded to fn-vpn unchanged
+        #[arg(trailing_var_arg = true, allow_hyphen_values = true)]
+        args: Vec<String>,
     },
 }
 
@@ -132,55 +86,60 @@ enum VpnCmd {
 async fn main() -> Result<()> {
     let cli = Cli::parse();
 
-    let log_level = if cli.debug { "debug" } else { "info" };
+    let level = if cli.debug { "debug" } else { "info" };
     tracing_subscriber::fmt()
         .with_env_filter(
             EnvFilter::try_from_default_env()
-                .unwrap_or_else(|_| EnvFilter::new(format!("fn={},freedomnet={}", log_level, log_level)))
+                .unwrap_or_else(|_| EnvFilter::new(level))
         )
         .with_target(false)
         .init();
 
     match cli.command {
-        None | Some(Cmd::Proxy { .. }) => {
-            let listen = match cli.command {
-                Some(Cmd::Proxy { listen }) => listen,
-                _ => cli.listen,
-            };
-            proxy::serve(proxy::ProxyConfig { listen }).await?;
+        None => {
+            run_proxy(cli.listen, cli.pac_listen, cli.no_pac).await?;
         }
-
-        Some(Cmd::Vpn { vpn }) => match vpn {
-            VpnCmd::Openvpn { server, port, tcp, out } => {
-                vpn::OpenVpnConfig {
-                    server,
-                    port,
-                    proto: if tcp { "tcp" } else { "udp" },
-                    out_path: out,
-                }.write()?;
-            }
-
-            VpnCmd::Wireguard { server, pubkey, address, dns, out } => {
-                vpn::WireGuardConfig {
-                    server_endpoint: server,
-                    server_pubkey: pubkey,
-                    client_address: address,
-                    dns,
-                    out_path: out,
-                }.write()?;
-            }
-
-            VpnCmd::Shadowsocks { server, port, password, method, out } => {
-                vpn::ShadowsocksConfig {
-                    server,
-                    port,
-                    password,
-                    method,
-                    out_path: out,
-                }.write()?;
-            }
-        },
+        Some(Cmd::Proxy { listen, pac_listen, no_pac }) => {
+            run_proxy(listen, pac_listen, no_pac).await?;
+        }
+        Some(Cmd::Vpn { vpn_type, args }) => {
+            run_fn_vpn(&vpn_type, &args)?;
+        }
     }
 
     Ok(())
+}
+
+async fn run_proxy(listen: SocketAddr, pac_listen: SocketAddr, no_pac: bool) -> Result<()> {
+    if !no_pac {
+        let pac_l   = pac_listen;
+        let proxy_l = listen;
+        tokio::spawn(async move {
+            if let Err(e) = pac::serve_pac(pac_l, proxy_l).await {
+                tracing::warn!("PAC server error: {}", e);
+            }
+        });
+    }
+    proxy::serve(proxy::ProxyConfig { listen }).await
+}
+
+/// Invoke the `fn-vpn` D binary (must be compiled first: cd vpngen && dub build).
+fn run_fn_vpn(vpn_type: &str, extra_args: &[String]) -> Result<()> {
+    let binary = if std::path::Path::new("vpngen/fn-vpn").exists() {
+        "vpngen/fn-vpn"
+    } else {
+        "fn-vpn"
+    };
+
+    match Command::new(binary).arg(vpn_type).args(extra_args).status() {
+        Ok(s) if s.success() => Ok(()),
+        Ok(s) => anyhow::bail!("fn-vpn exited with {}", s),
+        Err(e) => {
+            eprintln!("Error: '{}': {}", binary, e);
+            eprintln!("Build the D VPN generator:");
+            eprintln!("  cd vpngen && dub build -b release");
+            eprintln!("  https://dlang.org/download.html");
+            anyhow::bail!("fn-vpn not found")
+        }
+    }
 }
