@@ -206,6 +206,7 @@ name = "freedomnet"
 version = "0.2.0"
 dependencies = [
  "anyhow",
+ "cc",
  "clap",
  "reqwest",
  "serde",
