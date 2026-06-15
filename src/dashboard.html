@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>FreedomNet — Stats</title>
+<style>
+:root {
+  --bg:      #0d1117;
+  --surface: #161b22;
+  --border:  #30363d;
+  --text:    #e6edf3;
+  --muted:   #8b949e;
+  --green:   #3fb950;
+  --red:     #f85149;
+  --blue:    #58a6ff;
+  --yellow:  #d29922;
+  --purple:  #bc8cff;
+  --orange:  #f0883e;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: 'Cascadia Code', 'Fira Code', monospace;
+  font-size: 14px;
+  padding: 0;
+  min-height: 100vh;
+}
+nav {
+  background: var(--surface);
+  border-bottom: 1px solid var(--border);
+  padding: 12px 24px;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+nav .logo { color: var(--blue); font-weight: 700; font-size: 18px; }
+nav .status { color: var(--green); font-size: 12px; }
+nav .uptime-badge {
+  margin-left: auto;
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 4px 12px;
+  font-size: 12px;
+  color: var(--muted);
+}
+main { padding: 24px; max-width: 1200px; margin: 0 auto; }
+h2 { font-size: 12px; text-transform: uppercase; letter-spacing: .8px;
+     color: var(--muted); margin-bottom: 12px; }
+.grid-6 {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  gap: 12px;
+  margin-bottom: 28px;
+}
+.card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 16px 18px;
+}
+.card .lbl { font-size: 11px; color: var(--muted); text-transform: uppercase;
+             letter-spacing: .7px; margin-bottom: 6px; }
+.card .val { font-size: 26px; font-weight: 700; line-height: 1; }
+.card .sub { font-size: 11px; color: var(--muted); margin-top: 4px; }
+.green .val  { color: var(--green); }
+.blue  .val  { color: var(--blue); }
+.purple .val { color: var(--purple); }
+.yellow .val { color: var(--yellow); }
+.orange .val { color: var(--orange); }
+.red .val    { color: var(--red); }
+.two-col {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  margin-bottom: 28px;
+}
+.panel {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 16px;
+}
+.panel .panel-title { font-size: 11px; text-transform: uppercase;
+                      letter-spacing: .7px; color: var(--muted); margin-bottom: 12px; }
+table { width: 100%; border-collapse: collapse; font-size: 12px; }
+th { text-align: left; color: var(--muted); padding: 4px 8px; font-weight: 400;
+     border-bottom: 1px solid var(--border); }
+td { padding: 6px 8px; border-bottom: 1px solid var(--border); }
+tr:last-child td { border-bottom: none; }
+.badge {
+  display: inline-block; border-radius: 4px; padding: 1px 6px;
+  font-size: 10px; font-weight: 600;
+}
+.badge-proxy  { background: #1a3a5c; color: var(--blue); }
+.badge-direct { background: #1a3d1a; color: var(--green); }
+.badge-block  { background: #3d1a1a; color: var(--red); }
+.bar-wrap { background: var(--bg); border-radius: 4px; height: 8px; overflow: hidden; }
+.bar      { height: 8px; border-radius: 4px; background: var(--blue);
+            transition: width .5s ease; }
+@media(max-width:640px){
+  .two-col { grid-template-columns: 1fr; }
+  .grid-6  { grid-template-columns: repeat(2, 1fr); }
+}
+</style>
+</head>
+<body>
+<nav>
+  <span class="logo">⚡ FreedomNet</span>
+  <span class="status" id="status-dot">● connecting…</span>
+  <span class="uptime-badge" id="uptime">—</span>
+</nav>
+<main>
+  <h2>Connection metrics</h2>
+  <div class="grid-6">
+    <div class="card green">
+      <div class="lbl">Active</div>
+      <div class="val" id="m-active">—</div>
+      <div class="sub">live tunnels</div>
+    </div>
+    <div class="card blue">
+      <div class="lbl">Total</div>
+      <div class="val" id="m-total">—</div>
+      <div class="sub">all-time</div>
+    </div>
+    <div class="card purple">
+      <div class="lbl">↑ Upload</div>
+      <div class="val" id="m-up">—</div>
+      <div class="sub">client→server</div>
+    </div>
+    <div class="card yellow">
+      <div class="lbl">↓ Download</div>
+      <div class="val" id="m-down">—</div>
+      <div class="sub">server→client</div>
+    </div>
+    <div class="card orange">
+      <div class="lbl">TLS Bypass</div>
+      <div class="val" id="m-tls">—</div>
+      <div class="sub">split events</div>
+    </div>
+    <div class="card blue">
+      <div class="lbl">DoH Cache</div>
+      <div class="val" id="m-doh">—</div>
+      <div class="sub">hit rate</div>
+    </div>
+  </div>
+
+  <div class="two-col">
+    <div class="panel">
+      <div class="panel-title">DoH Cache performance</div>
+      <div style="display:flex;align-items:center;gap:12px;margin-bottom:8px">
+        <span style="color:var(--muted);font-size:12px;min-width:60px" id="doh-pct-label">0%</span>
+        <div class="bar-wrap" style="flex:1"><div class="bar" id="doh-bar" style="width:0%"></div></div>
+      </div>
+      <p style="font-size:11px;color:var(--muted)">
+        DNS over HTTPS cache reduces resolver latency and hides DNS queries from ISP.
+        A high hit rate means repeated domains are resolved locally without network round-trips.
+      </p>
+    </div>
+    <div class="panel">
+      <div class="panel-title">Domain routing rules</div>
+      <table id="rules-table">
+        <thead><tr><th>Domain</th><th>Action</th></tr></thead>
+        <tbody id="rules-body">
+          <tr><td colspan="2" style="color:var(--muted)">Loading…</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</main>
+
+<script>
+const $ = id => document.getElementById(id);
+
+async function fetchStats() {
+  try {
+    const r = await fetch('/api/stats');
+    if (!r.ok) throw new Error('not ok');
+    const s = await r.json();
+    $('status-dot').textContent = '● live';
+    $('status-dot').style.color = '#3fb950';
+    $('uptime').textContent = 'up ' + (s.uptime || '—');
+    $('m-active').textContent  = fmt(s.active_connections);
+    $('m-total').textContent   = fmt(s.total_connections);
+    $('m-up').textContent      = s.bytes_up_human   || '—';
+    $('m-down').textContent    = s.bytes_down_human || '—';
+    $('m-tls').textContent     = fmt(s.tls_splits);
+    const pct = s.doh_hit_rate != null ? Math.round(s.doh_hit_rate * 100) : 0;
+    $('m-doh').textContent = pct + '%';
+    $('doh-bar').style.width = pct + '%';
+    $('doh-pct-label').textContent = pct + '%';
+  } catch(e) {
+    $('status-dot').textContent = '● offline';
+    $('status-dot').style.color = '#f85149';
+  }
+}
+
+async function fetchRules() {
+  try {
+    const r = await fetch('/api/rules');
+    if (!r.ok) return;
+    const d = await r.json();
+    const tbody = $('rules-body');
+    tbody.innerHTML = '';
+    (d.samples || []).forEach(item => {
+      const tr = document.createElement('tr');
+      const badge = {PROXY:'badge-proxy',DIRECT:'badge-direct',BLOCK:'badge-block'}[item.action] || '';
+      tr.innerHTML = `<td>${esc(item.domain)}</td><td><span class="badge ${badge}">${esc(item.action)}</span></td>`;
+      tbody.appendChild(tr);
+    });
+  } catch(e) {}
+}
+
+function fmt(n) {
+  if (n == null) return '—';
+  if (n >= 1e9)  return (n/1e9).toFixed(2)+'B';
+  if (n >= 1e6)  return (n/1e6).toFixed(1)+'M';
+  if (n >= 1000) return (n/1000).toFixed(1)+'K';
+  return String(n);
+}
+
+function esc(s) {
+  return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+}
+
+setInterval(fetchStats, 2500);
+setInterval(fetchRules, 10000);
+fetchStats();
+fetchRules();
+</script>
+</body>
+</html>

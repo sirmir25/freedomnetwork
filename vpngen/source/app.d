@@ -18,6 +18,7 @@ import openvpn     : OpenVpnConfig,    generate;
 import wireguard   : WireGuardConfig,  generate;
 import shadowsocks : ShadowsocksConfig, generate;
 import checker     : runChecker;
+import config      : runConfigCmd;
 
 void printHelp()
 {
@@ -54,6 +55,8 @@ int main(string[] args)
             return cmdShadowsocks(args[2..$]);
         case "check":
             return runChecker(args[2..$]);
+        case "config":
+            return runConfigCmd(args[2..$]);
         case "-h", "--help", "help":
             printHelp();
             return 0;
