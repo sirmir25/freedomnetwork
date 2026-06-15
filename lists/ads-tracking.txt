@@ -1,0 +1,413 @@
+# FreedomNet Ads & Tracking Blocklist
+# Block these domains to reduce surveillance and ads
+# Action: BLOCK
+
+# ── Google advertising ────────────────────────────────────────────────────────
+BLOCK doubleclick.net
+BLOCK googleadservices.com
+BLOCK googlesyndication.com
+BLOCK googletagmanager.com
+BLOCK googletagservices.com
+BLOCK google-analytics.com
+BLOCK adservice.google.com
+BLOCK adservice.google.co.uk
+BLOCK adservice.google.ca
+BLOCK adservice.google.com.au
+BLOCK adservice.google.de
+BLOCK adservice.google.fr
+BLOCK adservice.google.co.jp
+BLOCK adservice.google.co.in
+BLOCK adservice.google.com.br
+BLOCK adservice.google.ru
+BLOCK adsense.google.com
+BLOCK pagead2.googlesyndication.com
+BLOCK tpc.googlesyndication.com
+BLOCK partnerdrive.google.com
+BLOCK google.com/ads
+BLOCK ads.google.com
+BLOCK partner.googleadservices.com
+
+# ── Facebook/Meta advertising ─────────────────────────────────────────────────
+BLOCK connect.facebook.net
+BLOCK facebook.com/tr
+BLOCK fbevents.js
+BLOCK graph.facebook.com
+BLOCK pixel.facebook.com
+BLOCK ads.facebook.com
+BLOCK business.facebook.com
+BLOCK an.facebook.com
+BLOCK static.ads-twitter.com
+
+# ── Twitter/X advertising ─────────────────────────────────────────────────────
+BLOCK ads-twitter.com
+BLOCK ads.twitter.com
+BLOCK static.ads-twitter.com
+BLOCK t.co
+BLOCK analytics.twitter.com
+
+# ── Amazon advertising ────────────────────────────────────────────────────────
+BLOCK advertising.amazon.com
+BLOCK aax.amazon-adsystem.com
+BLOCK aax-eu.amazon-adsystem.com
+BLOCK aax-fe.amazon-adsystem.com
+BLOCK mads.amazon-adsystem.com
+BLOCK c.amazon-adsystem.com
+BLOCK fls-na.amazon-adsystem.com
+BLOCK fls-eu.amazon-adsystem.com
+BLOCK fls-fe.amazon-adsystem.com
+BLOCK ir-na.amazon-adsystem.com
+BLOCK ir-eu.amazon-adsystem.com
+BLOCK s.amazon-adsystem.com
+
+# ── Microsoft advertising ─────────────────────────────────────────────────────
+BLOCK ads.microsoft.com
+BLOCK bat.bing.com
+BLOCK c.bing.com
+BLOCK bingads.com
+BLOCK go.microsoft.com
+
+# ── Analytics ─────────────────────────────────────────────────────────────────
+BLOCK analytics.google.com
+BLOCK stats.g.doubleclick.net
+BLOCK ssl.google-analytics.com
+BLOCK www.google-analytics.com
+BLOCK mixpanel.com
+BLOCK api.mixpanel.com
+BLOCK cdn.mxpnl.com
+BLOCK cdn4.mxpnl.com
+BLOCK segment.com
+BLOCK api.segment.com
+BLOCK cdn.segment.com
+BLOCK cdn.segment.io
+BLOCK api.segment.io
+BLOCK amplitude.com
+BLOCK api.amplitude.com
+BLOCK cdn.amplitude.com
+BLOCK api2.amplitude.com
+BLOCK heap.io
+BLOCK heapanalytics.com
+BLOCK cdn.heapanalytics.com
+BLOCK js.heapanalytics.com
+BLOCK fullstory.com
+BLOCK rs.fullstory.com
+BLOCK edge.fullstory.com
+BLOCK hotjar.com
+BLOCK static.hotjar.com
+BLOCK api.hotjar.com
+BLOCK vars.hotjar.com
+BLOCK insights.hotjar.com
+BLOCK mouseflow.com
+BLOCK cdn.mouseflow.com
+BLOCK dc.mouseflow.com
+BLOCK clarity.microsoft.com
+BLOCK claritybt.freshdesk.com
+
+# ── Data brokers / third-party tracking ──────────────────────────────────────
+BLOCK scorecardresearch.com
+BLOCK b.scorecardresearch.com
+BLOCK sb.scorecardresearch.com
+BLOCK omtrdc.net
+BLOCK adobedtm.com
+BLOCK demdex.net
+BLOCK everesttech.net
+BLOCK everestads.com
+BLOCK mookie1.com
+BLOCK rfihub.com
+BLOCK dotomi.com
+BLOCK mediaplex.com
+BLOCK bluekai.com
+BLOCK lotame.com
+BLOCK audigent.com
+BLOCK crwdcntrl.net
+BLOCK krxd.net
+BLOCK zemanta.com
+BLOCK contextweb.com
+BLOCK openx.net
+BLOCK openx.com
+BLOCK servedby.openx.net
+BLOCK us-east-1.openx.net
+BLOCK us.openx.net
+BLOCK eu.openx.net
+BLOCK ap.openx.net
+BLOCK rubiconproject.com
+BLOCK rubiconproject-edge.com
+BLOCK fastlane.rubiconproject.com
+BLOCK optout.rubiconproject.com
+BLOCK pixel.rubiconproject.com
+BLOCK prebid.rubiconproject.com
+BLOCK adsafeprotected.com
+BLOCK fw.adsafeprotected.com
+BLOCK pixel.adsafeprotected.com
+BLOCK doubleverify.com
+BLOCK cdn.doubleverify.com
+BLOCK rtb.doubleverify.com
+BLOCK pub.doubleverify.com
+BLOCK cdn2.doubleverify.com
+BLOCK rl.doubleverify.com
+BLOCK integral-direct.com
+BLOCK data.adsrvr.org
+BLOCK js.adsrvr.org
+BLOCK match.adsrvr.org
+BLOCK pixel.adsrvr.org
+BLOCK thetradedesk.com
+BLOCK tradedesk.com
+BLOCK adsrvr.org
+BLOCK insight.adsrvr.org
+BLOCK sin.adsrvr.org
+BLOCK sog.adsrvr.org
+BLOCK analytics.tiktok.com
+BLOCK ads.tiktok.com
+BLOCK mon.tiktok.com
+BLOCK analytics.yahoo.com
+BLOCK ads.yahoo.com
+BLOCK udc.yahoo.com
+BLOCK geo.yahoo.com
+BLOCK yahoo-ads.net
+BLOCK yho.com
+BLOCK ads.yap.yahoo.com
+BLOCK sp1.yimg.com
+
+# ── Outbrain / Taboola / content discovery ───────────────────────────────────
+BLOCK outbrain.com
+BLOCK widgets.outbrain.com
+BLOCK amplify.outbrain.com
+BLOCK log.outbrain.com
+BLOCK odb.outbrain.com
+BLOCK taboola.com
+BLOCK api.taboola.com
+BLOCK cdn.taboola.com
+BLOCK trc.taboola.com
+BLOCK images.taboola.com
+BLOCK s.taboola.com
+BLOCK revcontent.com
+BLOCK api.revcontent.com
+BLOCK mediaforgecdn.com
+BLOCK zergnet.com
+BLOCK mgid.com
+BLOCK d.mgid.com
+BLOCK cm.mgid.com
+
+# ── Comscore ──────────────────────────────────────────────────────────────────
+BLOCK comscore.com
+BLOCK beacon.comscore.com
+BLOCK sb.comscore.com
+BLOCK statscdn.com
+BLOCK imrworldwide.com
+BLOCK secure-us.imrworldwide.com
+
+# ── Nielsen ───────────────────────────────────────────────────────────────────
+BLOCK nielsen.com
+BLOCK imrworld.com
+BLOCK sitestat.com
+BLOCK imr.nu
+BLOCK survey.imrworldwide.com
+
+# ── LiveRamp / Acxiom ────────────────────────────────────────────────────────
+BLOCK liveramp.com
+BLOCK pixel.acxiom.com
+BLOCK acxiom.com
+BLOCK acxiomapac.com
+BLOCK idsync.acxiom.com
+BLOCK sync.acxiom.com
+
+# ── Criteo ────────────────────────────────────────────────────────────────────
+BLOCK criteo.com
+BLOCK static.criteo.com
+BLOCK static.criteo.net
+BLOCK dis.criteo.com
+BLOCK widget.criteo.com
+BLOCK ld.criteo.com
+BLOCK rtax.criteo.com
+BLOCK bidder.criteo.com
+BLOCK kinesis.criteo.com
+BLOCK glbs.criteo.com
+
+# ── AppNexus / Xandr ──────────────────────────────────────────────────────────
+BLOCK appnexus.com
+BLOCK ib.anycast.adnxs.com
+BLOCK ib.adnxs.com
+BLOCK adnxs.com
+BLOCK adnxs-simple.com
+BLOCK xandr.com
+BLOCK secure.adnxs.com
+BLOCK mobile.adnxs.com
+
+# ── Index Exchange ────────────────────────────────────────────────────────────
+BLOCK casalemedia.com
+BLOCK indexexchange.com
+BLOCK ie10.casalemedia.com
+BLOCK cbe.casalemedia.com
+BLOCK js-sec.indexww.com
+BLOCK indexww.com
+BLOCK ix.intentmedia.net
+
+# ── PubMatic ──────────────────────────────────────────────────────────────────
+BLOCK pubmatic.com
+BLOCK ads.pubmatic.com
+BLOCK image9.pubmatic.com
+BLOCK ow.pubmatic.com
+BLOCK hbopenbid.pubmatic.com
+BLOCK gads.pubmatic.com
+BLOCK tracking.pubmatic.com
+
+# ── SpotX / Magnite ──────────────────────────────────────────────────────────
+BLOCK spotx.tv
+BLOCK search.spotx.tv
+BLOCK cdn.spotx.tv
+BLOCK spotxchange.com
+BLOCK magnite.com
+BLOCK tremorvideo.com
+BLOCK springserve.com
+BLOCK rhythmone.com
+BLOCK rubiconproject.com
+
+# ── Tremor / Unruly ──────────────────────────────────────────────────────────
+BLOCK unrulymedia.com
+BLOCK unruly.co
+BLOCK s1.adform.net
+BLOCK adform.net
+BLOCK adformnet.com
+BLOCK track.adform.net
+
+# ── Sizmek (Amazon) / Atlas ───────────────────────────────────────────────────
+BLOCK sizmek.com
+BLOCK serving-sys.com
+BLOCK bs.serving-sys.com
+BLOCK es.serving-sys.com
+BLOCK fls.doubleclick.net
+
+# ── Browser fingerprinting / supercookies ─────────────────────────────────────
+BLOCK fingerprint.com
+BLOCK fpjs.io
+BLOCK api.fpjs.io
+BLOCK challenges.cloudflare.com
+BLOCK hcaptcha.com
+BLOCK assets.hcaptcha.com
+BLOCK newassets.hcaptcha.com
+BLOCK imgs.hcaptcha.com
+
+# ── A/B testing / optimization ────────────────────────────────────────────────
+BLOCK optimizely.com
+BLOCK cdn.optimizely.com
+BLOCK log.optimizely.com
+BLOCK split.io
+BLOCK sdk.split.io
+BLOCK events.split.io
+BLOCK vwo.com
+BLOCK dev.visualwebsiteoptimizer.com
+BLOCK visualwebsiteoptimizer.com
+BLOCK cdn.convert.com
+BLOCK convert.com
+BLOCK monetate.net
+BLOCK monetate.com
+BLOCK se.monetate.net
+BLOCK p.monetate.net
+BLOCK sitegainer.com
+
+# ── Session replay / heatmaps ─────────────────────────────────────────────────
+BLOCK logrocket.com
+BLOCK cdn.logrocket.io
+BLOCK r.logrocket.io
+BLOCK inspectlet.com
+BLOCK fast.wistia.com
+BLOCK embed-ssl.wistia.com
+BLOCK clicktale.net
+BLOCK s.clicktale.net
+BLOCK in.getclicky.com
+BLOCK static.getclicky.com
+
+# ── Advertisers / DSP ─────────────────────────────────────────────────────────
+BLOCK adcolony.com
+BLOCK events3alt.adcolony.com
+BLOCK ads.adcolony.com
+BLOCK vungle.com
+BLOCK rpc.vungle.com
+BLOCK ads3.vungle.com
+BLOCK tpat.vungle.com
+BLOCK cdn-lb.vungle.com
+BLOCK applovin.com
+BLOCK rt.applovin.com
+BLOCK d.applovin.com
+BLOCK events.applovin.com
+BLOCK ironsource.com
+BLOCK supersonic.com
+BLOCK smaato.net
+BLOCK s.smaato.net
+BLOCK prebid.smaato.net
+BLOCK mopub.com
+BLOCK ads.mopub.com
+BLOCK inmobi.com
+BLOCK ads.inmobi.com
+BLOCK cf.inmobi.com
+BLOCK i.l.inmobicdn.net
+BLOCK startapp.com
+BLOCK ssp.startapp.com
+BLOCK unity3d.com
+BLOCK unityads.unity3d.com
+BLOCK auction.unityads.unity3d.com
+BLOCK config.unityads.unity3d.com
+BLOCK webview.unityads.unity3d.com
+BLOCK mediation.unity3d.com
+BLOCK adsmogo.com
+BLOCK chartboost.com
+BLOCK live.chartboost.com
+BLOCK dfn.chartboost.com
+BLOCK c3.chartboost.com
+BLOCK banner.chartboost.com
+
+# ── ISP / network-level tracking ─────────────────────────────────────────────
+BLOCK netseer.com
+BLOCK data.netseer.com
+BLOCK ads.netseer.com
+BLOCK widgets.netseer.com
+BLOCK cdn.netseer.com
+
+# ── Push notification / ad-related ───────────────────────────────────────────
+BLOCK onesignal.com
+BLOCK cdn.onesignal.com
+BLOCK notification.onesignal.com
+BLOCK pushwoosh.com
+BLOCK cp.pushwoosh.com
+BLOCK api.pushwoosh.com
+BLOCK kumulos.com
+BLOCK batch.com
+BLOCK onetrust.com
+BLOCK cdn.cookielaw.org
+BLOCK geolocation.onetrust.com
+BLOCK privacyportal.onetrust.com
+
+# ── Affiliate tracking ────────────────────────────────────────────────────────
+BLOCK shareasale.com
+BLOCK www.shareasale.com
+BLOCK track.shareasale.com
+BLOCK cj.com
+BLOCK dpbolvw.net
+BLOCK jdoqocy.com
+BLOCK anrdoezrs.net
+BLOCK kqzyfj.com
+BLOCK apmebf.com
+BLOCK lduhtrp.com
+BLOCK awltovhc.com
+BLOCK qksz.net
+BLOCK dtm.barnesandnoble.com
+BLOCK linksynergy.com
+BLOCK click.linksynergy.com
+BLOCK affiliate.rakuten.com
+BLOCK linkconnector.com
+BLOCK services.linkconnector.com
+BLOCK awin.com
+BLOCK www.awin.com
+BLOCK www1.awin.com
+BLOCK clicks.awltovhc.com
+BLOCK commission-junction.com
+BLOCK nvrclk.com
+BLOCK epnclick.com
+BLOCK avantlink.com
+BLOCK pjtra.com
+BLOCK pjatr.com
+BLOCK pjtrev.com
+BLOCK tradedoubler.com
+BLOCK clk.tradedoubler.com
+BLOCK tclick.com
+BLOCK zumobi.com
+

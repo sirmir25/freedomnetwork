@@ -1,0 +1,852 @@
+# Comprehensive advertising and tracking domain blocklist
+# Generated for FreedomNet bypass-rules.txt
+# Format: BLOCK domain
+
+
+# ── Google / DoubleClick ────────────────────────────────────────
+BLOCK doubleclick.net
+BLOCK ad.doubleclick.net
+BLOCK ads.doubleclick.net
+BLOCK static.doubleclick.net
+BLOCK securepubads.doubleclick.net
+BLOCK www.doubleclick.net
+BLOCK pubads.doubleclick.net
+BLOCK cm.doubleclick.net
+BLOCK s0.doubleclick.net
+BLOCK s1.doubleclick.net
+BLOCK s2.doubleclick.net
+BLOCK s3.doubleclick.net
+BLOCK mediavisor.doubleclick.net
+BLOCK alt.doubleclick.net
+BLOCK cm.doubleclick.net
+BLOCK g.doubleclick.net
+BLOCK pagead2.doubleclick.net
+BLOCK partner.doubleclick.net
+BLOCK ssl.doubleclick.net
+BLOCK tpc.doubleclick.net
+BLOCK stats.doubleclick.net
+BLOCK pubads.doubleclick.net
+
+# ── Google AdSense ──────────────────────────────────────────────
+BLOCK googlesyndication.com
+BLOCK www.googlesyndication.com
+BLOCK pagead2.googlesyndication.com
+BLOCK tpc.googlesyndication.com
+BLOCK adservice.googlesyndication.com
+BLOCK partner.googlesyndication.com
+BLOCK cm.googlesyndication.com
+BLOCK static.googlesyndication.com
+BLOCK s.googlesyndication.com
+BLOCK ad.googlesyndication.com
+
+# ── Google Ads ──────────────────────────────────────────────────
+BLOCK googleadservices.com
+BLOCK www.googleadservices.com
+BLOCK www2.googleadservices.com
+BLOCK partner.googleadservices.com
+BLOCK oauth.googleadservices.com
+BLOCK advertising.googleadservices.com
+BLOCK accounts.googleadservices.com
+BLOCK pagead.googleadservices.com
+BLOCK mobile.googleadservices.com
+
+# ── Google Analytics ────────────────────────────────────────────
+BLOCK google-analytics.com
+BLOCK www.google-analytics.com
+BLOCK ssl.google-analytics.com
+BLOCK stats.google-analytics.com
+BLOCK analytics.google-analytics.com
+BLOCK m.google-analytics.com
+BLOCK app.google-analytics.com
+BLOCK tracking.google-analytics.com
+
+# ── Google Tag Manager ──────────────────────────────────────────
+BLOCK googletagmanager.com
+BLOCK www.googletagmanager.com
+BLOCK static.googletagmanager.com
+BLOCK ssl.googletagmanager.com
+BLOCK tag.googletagmanager.com
+
+# ── Google Tag Services ─────────────────────────────────────────
+BLOCK googletagservices.com
+BLOCK www.googletagservices.com
+BLOCK static.googletagservices.com
+BLOCK ssl.googletagservices.com
+BLOCK tag.googletagservices.com
+
+# ── Xandr (AppNexus) ────────────────────────────────────────────
+BLOCK adnxs.com
+BLOCK ib.adnxs.com
+BLOCK secure.adnxs.com
+BLOCK mobile.adnxs.com
+BLOCK sin.adnxs.com
+BLOCK fra.adnxs.com
+BLOCK ams.adnxs.com
+BLOCK use.adnxs.com
+BLOCK euw.adnxs.com
+BLOCK sea.adnxs.com
+BLOCK ad.adnxs.com
+BLOCK bid.adnxs.com
+BLOCK impression.adnxs.com
+BLOCK pixel.adnxs.com
+BLOCK rtb.adnxs.com
+BLOCK matching.adnxs.com
+BLOCK media.adnxs.com
+BLOCK nycap.adnxs.com
+BLOCK sov.adnxs.com
+BLOCK appnexus.com
+BLOCK ib.appnexus.com
+BLOCK api.appnexus.com
+BLOCK platform.appnexus.com
+BLOCK console.appnexus.com
+BLOCK impbus.appnexus.com
+BLOCK secure.appnexus.com
+BLOCK reporting.appnexus.com
+BLOCK bidder.appnexus.com
+BLOCK creative.appnexus.com
+BLOCK optout.appnexus.com
+BLOCK creatives.appnexus.com
+BLOCK sync.appnexus.com
+
+# ── Criteo ──────────────────────────────────────────────────────
+BLOCK criteo.com
+BLOCK static.criteo.com
+BLOCK dis.criteo.com
+BLOCK hlb.criteo.com
+BLOCK rtax.criteo.com
+BLOCK widget.criteo.com
+BLOCK bidder.criteo.com
+BLOCK sslwidget.criteo.com
+BLOCK gum.criteo.com
+BLOCK log.criteo.com
+BLOCK sdkapi.criteo.com
+BLOCK accelerated.criteo.com
+BLOCK marketing.criteo.com
+BLOCK rdi.criteo.com
+BLOCK ld.criteo.com
+BLOCK appdas.criteo.com
+BLOCK glbs.criteo.com
+BLOCK cat.criteo.com
+
+# ── Criteo CDN ──────────────────────────────────────────────────
+BLOCK criteo.net
+BLOCK adcluster.criteo.net
+BLOCK bid.criteo.net
+BLOCK cdn.criteo.net
+BLOCK sdkapi.criteo.net
+BLOCK static.criteo.net
+BLOCK bidder.criteo.net
+BLOCK hlb.criteo.net
+BLOCK kinesis.criteo.net
+BLOCK static.criteo.net
+
+# ── OpenX ───────────────────────────────────────────────────────
+BLOCK openx.net
+BLOCK us-east-1.openx.net
+BLOCK us-west-2.openx.net
+BLOCK eu-west-1.openx.net
+BLOCK ap-southeast-1.openx.net
+BLOCK delivery.openx.net
+BLOCK sync.openx.net
+BLOCK rtb.openx.net
+BLOCK servedby.openx.net
+BLOCK ads.openx.net
+BLOCK prebid.openx.net
+BLOCK bidder.openx.net
+BLOCK onapps.openx.net
+BLOCK openx.com
+BLOCK ads.openx.com
+BLOCK delivery.openx.com
+BLOCK sync.openx.com
+BLOCK rtb.openx.com
+BLOCK prebid.openx.com
+BLOCK reporting.openx.com
+BLOCK market.openx.com
+
+# ── Rubicon/Magnite ─────────────────────────────────────────────
+BLOCK rubiconproject.com
+BLOCK fastlane.rubiconproject.com
+BLOCK optout.rubiconproject.com
+BLOCK ads.rubiconproject.com
+BLOCK pixel.rubiconproject.com
+BLOCK secure.rubiconproject.com
+BLOCK eum.rubiconproject.com
+BLOCK beacon.rubiconproject.com
+BLOCK prebid.rubiconproject.com
+BLOCK sync.rubiconproject.com
+BLOCK tap.rubiconproject.com
+BLOCK stats.rubiconproject.com
+BLOCK cdn.rubiconproject.com
+BLOCK pbs.rubiconproject.com
+BLOCK hb.rubiconproject.com
+BLOCK token.rubiconproject.com
+
+# ── Index Exchange ──────────────────────────────────────────────
+BLOCK casalemedia.com
+BLOCK ie10.casalemedia.com
+BLOCK ie20.casalemedia.com
+BLOCK ie30.casalemedia.com
+BLOCK ie40.casalemedia.com
+BLOCK ie50.casalemedia.com
+BLOCK cbe.casalemedia.com
+BLOCK pf.casalemedia.com
+BLOCK js.casalemedia.com
+BLOCK sync.casalemedia.com
+BLOCK delivery.casalemedia.com
+BLOCK ad.casalemedia.com
+BLOCK indexexchange.com
+BLOCK as.indexexchange.com
+BLOCK eu.indexexchange.com
+BLOCK ap.indexexchange.com
+BLOCK rtb.indexexchange.com
+BLOCK sync.indexexchange.com
+BLOCK px.indexexchange.com
+BLOCK prebid.indexexchange.com
+BLOCK cdn.indexexchange.com
+
+# ── The Trade Desk ──────────────────────────────────────────────
+BLOCK adsrvr.org
+BLOCK data.adsrvr.org
+BLOCK insight.adsrvr.org
+BLOCK js.adsrvr.org
+BLOCK match.adsrvr.org
+BLOCK pixel.adsrvr.org
+BLOCK ad.adsrvr.org
+BLOCK rtb.adsrvr.org
+BLOCK sync.adsrvr.org
+BLOCK beacon.adsrvr.org
+BLOCK sin.adsrvr.org
+BLOCK sog.adsrvr.org
+BLOCK cdn.adsrvr.org
+BLOCK ads.adsrvr.org
+
+# ── PubMatic ────────────────────────────────────────────────────
+BLOCK pubmatic.com
+BLOCK ads.pubmatic.com
+BLOCK image9.pubmatic.com
+BLOCK ow.pubmatic.com
+BLOCK hbopenbid.pubmatic.com
+BLOCK gads.pubmatic.com
+BLOCK tracking.pubmatic.com
+BLOCK sjs.pubmatic.com
+BLOCK sync.pubmatic.com
+BLOCK publisher.pubmatic.com
+BLOCK prebid.pubmatic.com
+BLOCK rtb.pubmatic.com
+
+# ── SpringServe/Magnite ─────────────────────────────────────────
+BLOCK springserve.com
+BLOCK portal.springserve.com
+BLOCK static.springserve.com
+BLOCK img.springserve.com
+BLOCK ad.springserve.com
+BLOCK beacon.springserve.com
+
+# ── Magnite ─────────────────────────────────────────────────────
+BLOCK magnite.com
+BLOCK prebid.magnite.com
+BLOCK cdn.magnite.com
+BLOCK sync.magnite.com
+BLOCK rtb.magnite.com
+BLOCK ad.magnite.com
+BLOCK static.magnite.com
+BLOCK js.magnite.com
+
+# ── Outbrain ────────────────────────────────────────────────────
+BLOCK outbrain.com
+BLOCK widgets.outbrain.com
+BLOCK amplify.outbrain.com
+BLOCK log.outbrain.com
+BLOCK odb.outbrain.com
+BLOCK appcenter.outbrain.com
+BLOCK rep.outbrain.com
+BLOCK outbrain.org
+BLOCK ad.outbrain.org
+BLOCK beacon.outbrain.org
+BLOCK pixel.outbrain.org
+
+# ── Taboola ─────────────────────────────────────────────────────
+BLOCK taboola.com
+BLOCK api.taboola.com
+BLOCK cdn.taboola.com
+BLOCK trc.taboola.com
+BLOCK images.taboola.com
+BLOCK s.taboola.com
+BLOCK trc2.taboola.com
+BLOCK img.taboola.com
+BLOCK sdk.taboola.com
+BLOCK sync.taboola.com
+BLOCK ad.taboola.com
+BLOCK pvt.taboola.com
+BLOCK log.taboola.com
+
+# ── LiveRamp ────────────────────────────────────────────────────
+BLOCK liveramp.com
+BLOCK api.liveramp.com
+BLOCK pixel.liveramp.com
+BLOCK sync.liveramp.com
+BLOCK ats.liveramp.com
+BLOCK cdn.liveramp.com
+BLOCK impression.liveramp.com
+BLOCK liveramp.net
+BLOCK sync.liveramp.net
+BLOCK pixel.liveramp.net
+BLOCK ats.liveramp.net
+
+# ── Sizmek/Amazon ───────────────────────────────────────────────
+BLOCK serving-sys.com
+BLOCK bs.serving-sys.com
+BLOCK es.serving-sys.com
+BLOCK fls.serving-sys.com
+BLOCK ad.serving-sys.com
+BLOCK cdn.serving-sys.com
+BLOCK rtb.serving-sys.com
+
+# ── DoubleVerify ────────────────────────────────────────────────
+BLOCK doubleverify.com
+BLOCK cdn.doubleverify.com
+BLOCK rtb.doubleverify.com
+BLOCK pub.doubleverify.com
+BLOCK rl.doubleverify.com
+BLOCK pixel.doubleverify.com
+BLOCK bid.doubleverify.com
+BLOCK static.doubleverify.com
+BLOCK js.doubleverify.com
+BLOCK prebid.doubleverify.com
+
+# ── IAS ─────────────────────────────────────────────────────────
+BLOCK integral-direct.com
+BLOCK static.integral-direct.com
+BLOCK pixel.integral-direct.com
+BLOCK sync.integral-direct.com
+BLOCK js.integral-direct.com
+BLOCK ad.integral-direct.com
+BLOCK adsafeprotected.com
+BLOCK fw.adsafeprotected.com
+BLOCK pixel.adsafeprotected.com
+BLOCK cdn.adsafeprotected.com
+BLOCK static.adsafeprotected.com
+BLOCK js.adsafeprotected.com
+BLOCK api.adsafeprotected.com
+
+# ── Moat/Oracle ─────────────────────────────────────────────────
+BLOCK moat.com
+BLOCK pixel.moat.com
+BLOCK beacon.moat.com
+BLOCK ad.moat.com
+BLOCK z.moat.com
+BLOCK cdn.moat.com
+BLOCK api.moat.com
+BLOCK moatads.com
+BLOCK z.moatads.com
+BLOCK pixel.moatads.com
+BLOCK beacon.moatads.com
+BLOCK ad.moatads.com
+BLOCK cdn.moatads.com
+BLOCK api.moatads.com
+BLOCK static.moatads.com
+
+# ── Nielsen ─────────────────────────────────────────────────────
+BLOCK imrworldwide.com
+BLOCK secure-us.imrworldwide.com
+BLOCK secure-eu.imrworldwide.com
+BLOCK secure-ap.imrworldwide.com
+BLOCK cdn.imrworldwide.com
+BLOCK sdk.imrworldwide.com
+BLOCK tms.imrworldwide.com
+BLOCK survey.imrworldwide.com
+
+# ── Comscore ────────────────────────────────────────────────────
+BLOCK scorecardresearch.com
+BLOCK b.scorecardresearch.com
+BLOCK sb.scorecardresearch.com
+BLOCK pixel.scorecardresearch.com
+BLOCK beacon.scorecardresearch.com
+BLOCK comscore.com
+BLOCK beacon.comscore.com
+BLOCK sb.comscore.com
+BLOCK pixel.comscore.com
+BLOCK cdn.comscore.com
+BLOCK sdk.comscore.com
+
+# ── Adobe Analytics ─────────────────────────────────────────────
+BLOCK omtrdc.net
+BLOCK smetrics.omtrdc.net
+BLOCK adobedc.omtrdc.net
+BLOCK stats.omtrdc.net
+BLOCK pixel.omtrdc.net
+BLOCK ads.omtrdc.net
+BLOCK 2o7.omtrdc.net
+BLOCK cm.omtrdc.net
+
+# ── Adobe DTM ───────────────────────────────────────────────────
+BLOCK adobedtm.com
+BLOCK assets.adobedtm.com
+BLOCK launch.adobedtm.com
+BLOCK cdn.adobedtm.com
+BLOCK static.adobedtm.com
+BLOCK dpm.adobedtm.com
+
+# ── Adobe Audience Manager ──────────────────────────────────────
+BLOCK demdex.net
+BLOCK dpm.demdex.net
+BLOCK pixel.demdex.net
+BLOCK sync.demdex.net
+BLOCK cdn.demdex.net
+BLOCK cm.demdex.net
+BLOCK id.demdex.net
+BLOCK mid.demdex.net
+
+# ── Everest/Adobe ───────────────────────────────────────────────
+BLOCK everesttech.net
+BLOCK pixel.everesttech.net
+BLOCK sync.everesttech.net
+BLOCK ads.everesttech.net
+BLOCK cdn.everesttech.net
+
+# ── Segment ─────────────────────────────────────────────────────
+BLOCK segment.com
+BLOCK api.segment.com
+BLOCK cdn.segment.com
+BLOCK static.segment.com
+BLOCK segment.io
+BLOCK api.segment.io
+BLOCK cdn.segment.io
+BLOCK static.segment.io
+BLOCK evs.segment.io
+
+# ── Mixpanel ────────────────────────────────────────────────────
+BLOCK mixpanel.com
+BLOCK api.mixpanel.com
+BLOCK cdn.mixpanel.com
+BLOCK api-js.mixpanel.com
+BLOCK track.mixpanel.com
+
+# ── Mixpanel CDN ────────────────────────────────────────────────
+BLOCK mxpnl.com
+BLOCK cdn.mxpnl.com
+BLOCK cdn4.mxpnl.com
+BLOCK api.mxpnl.com
+
+# ── Amplitude ───────────────────────────────────────────────────
+BLOCK amplitude.com
+BLOCK api.amplitude.com
+BLOCK cdn.amplitude.com
+BLOCK api2.amplitude.com
+BLOCK analytics.amplitude.com
+BLOCK data.amplitude.com
+
+# ── Heap Analytics ──────────────────────────────────────────────
+BLOCK heapanalytics.com
+BLOCK cdn.heapanalytics.com
+BLOCK js.heapanalytics.com
+BLOCK api.heapanalytics.com
+BLOCK heap.heapanalytics.com
+
+# ── FullStory ───────────────────────────────────────────────────
+BLOCK fullstory.com
+BLOCK rs.fullstory.com
+BLOCK edge.fullstory.com
+BLOCK pixel.fullstory.com
+
+# ── Hotjar ──────────────────────────────────────────────────────
+BLOCK hotjar.com
+BLOCK static.hotjar.com
+BLOCK api.hotjar.com
+BLOCK vars.hotjar.com
+BLOCK insights.hotjar.com
+BLOCK identify.hotjar.com
+BLOCK script.hotjar.com
+
+# ── Quantcast ───────────────────────────────────────────────────
+BLOCK quantserve.com
+BLOCK pixel.quantserve.com
+BLOCK secure.quantserve.com
+BLOCK cdn.quantserve.com
+BLOCK pixel2.quantserve.com
+BLOCK quantcount.com
+BLOCK pixel.quantcount.com
+BLOCK cdn.quantcount.com
+
+# ── AOL Advertising ─────────────────────────────────────────────
+BLOCK advertising.com
+BLOCK ads.advertising.com
+BLOCK pixel.advertising.com
+BLOCK tag.advertising.com
+BLOCK beacon.advertising.com
+BLOCK server.advertising.com
+BLOCK rtb.advertising.com
+BLOCK sync.advertising.com
+
+# ── Verizon/Oath ────────────────────────────────────────────────
+BLOCK oath.com
+BLOCK ads.oath.com
+BLOCK pixel.oath.com
+BLOCK cdn.oath.com
+BLOCK sync.oath.com
+
+# ── Verizon Media ───────────────────────────────────────────────
+BLOCK verizonmedia.com
+BLOCK pixel.verizonmedia.com
+BLOCK ads.verizonmedia.com
+BLOCK cdn.verizonmedia.com
+BLOCK sync.verizonmedia.com
+
+# ── Conversant ──────────────────────────────────────────────────
+BLOCK conversantmedia.com
+BLOCK rtb.conversantmedia.com
+BLOCK sync.conversantmedia.com
+BLOCK pixel.conversantmedia.com
+BLOCK ad.conversantmedia.com
+BLOCK cdn.conversantmedia.com
+BLOCK mediaplex.conversantmedia.com
+
+# ── MediaMath ───────────────────────────────────────────────────
+BLOCK mathtag.com
+BLOCK pixel.mathtag.com
+BLOCK sync.mathtag.com
+BLOCK beacon.mathtag.com
+BLOCK ad.mathtag.com
+BLOCK rtb.mathtag.com
+BLOCK cdn.mathtag.com
+
+# ── Lotame ──────────────────────────────────────────────────────
+BLOCK lotame.com
+BLOCK pixel.lotame.com
+BLOCK bcp.lotame.com
+BLOCK ad.lotame.com
+BLOCK sync.lotame.com
+BLOCK cdn.lotame.com
+BLOCK api.lotame.com
+BLOCK crowdcontrol.lotame.com
+
+# ── Nielsen/Exelate ─────────────────────────────────────────────
+BLOCK exelator.com
+BLOCK pixel.exelator.com
+BLOCK sync.exelator.com
+BLOCK cm.exelator.com
+BLOCK cdn.exelator.com
+BLOCK adata.exelator.com
+
+# ── RFI Hub ─────────────────────────────────────────────────────
+BLOCK rfihub.com
+BLOCK pixel.rfihub.com
+BLOCK beacon.rfihub.com
+BLOCK sync.rfihub.com
+
+# ── Undertone ───────────────────────────────────────────────────
+BLOCK undertone.com
+BLOCK cdn.undertone.com
+BLOCK sync.undertone.com
+BLOCK pixel.undertone.com
+BLOCK beacon.undertone.com
+BLOCK ad.undertone.com
+
+# ── Yieldbot ────────────────────────────────────────────────────
+BLOCK yieldbot.com
+BLOCK i.yieldbot.com
+BLOCK cdn.yieldbot.com
+BLOCK beacon.yieldbot.com
+BLOCK pixel.yieldbot.com
+
+# ── BrightRoll ──────────────────────────────────────────────────
+BLOCK brightroll.com
+BLOCK cdn.brightroll.com
+BLOCK sync.brightroll.com
+BLOCK pixel.brightroll.com
+BLOCK ad.brightroll.com
+
+# ── Gravity ─────────────────────────────────────────────────────
+BLOCK gravityrd.com
+BLOCK pixel.gravityrd.com
+BLOCK ad.gravityrd.com
+BLOCK sync.gravityrd.com
+
+# ── SpotX ───────────────────────────────────────────────────────
+BLOCK spotx.tv
+BLOCK search.spotx.tv
+BLOCK cdn.spotx.tv
+BLOCK search2.spotx.tv
+BLOCK ssl.spotx.tv
+BLOCK spotxchange.com
+BLOCK search.spotxchange.com
+BLOCK cdn.spotxchange.com
+BLOCK ssl.spotxchange.com
+BLOCK sync.spotxchange.com
+
+# ── AppLovin ────────────────────────────────────────────────────
+BLOCK applovin.com
+BLOCK rt.applovin.com
+BLOCK d.applovin.com
+BLOCK events.applovin.com
+BLOCK cdn.applovin.com
+BLOCK sdk.applovin.com
+BLOCK creative.applovin.com
+BLOCK static.applovin.com
+
+# ── IronSource ──────────────────────────────────────────────────
+BLOCK ironsrc.com
+BLOCK platform.ironsrc.com
+BLOCK static.ironsrc.com
+BLOCK ad.ironsrc.com
+BLOCK mediation.ironsrc.com
+BLOCK ironsource.com
+BLOCK platform.ironsource.com
+BLOCK static.ironsource.com
+BLOCK ad.ironsource.com
+BLOCK mediation.ironsource.com
+BLOCK cdn.ironsource.com
+
+# ── Vungle/Liftoff ──────────────────────────────────────────────
+BLOCK vungle.com
+BLOCK rpc.vungle.com
+BLOCK ads3.vungle.com
+BLOCK tpat.vungle.com
+BLOCK cdn-lb.vungle.com
+BLOCK v.vungle.com
+BLOCK cdn.vungle.com
+BLOCK api.vungle.com
+
+# ── Digital Turbine ─────────────────────────────────────────────
+BLOCK adcolony.com
+BLOCK events3alt.adcolony.com
+BLOCK ads.adcolony.com
+BLOCK sdk.adcolony.com
+BLOCK static.adcolony.com
+
+# ── Smaato ──────────────────────────────────────────────────────
+BLOCK smaato.net
+BLOCK s.smaato.net
+BLOCK prebid.smaato.net
+BLOCK ad.smaato.net
+BLOCK cdn.smaato.net
+
+# ── InMobi ──────────────────────────────────────────────────────
+BLOCK inmobi.com
+BLOCK ads.inmobi.com
+BLOCK cf.inmobi.com
+BLOCK sdk.inmobi.com
+BLOCK cdn.inmobi.com
+BLOCK api.inmobi.com
+
+# ── InMobi CDN ──────────────────────────────────────────────────
+BLOCK inmobicdn.net
+BLOCK i.inmobicdn.net
+BLOCK l.inmobicdn.net
+BLOCK cdn.inmobicdn.net
+
+# ── StartApp ────────────────────────────────────────────────────
+BLOCK startapp.com
+BLOCK ssp.startapp.com
+BLOCK api.startapp.com
+BLOCK cdn.startapp.com
+BLOCK static.startapp.com
+
+# ── Amazon Advertising ──────────────────────────────────────────
+BLOCK amazon-adsystem.com
+BLOCK aax.amazon-adsystem.com
+BLOCK aax-eu.amazon-adsystem.com
+BLOCK aax-fe.amazon-adsystem.com
+BLOCK mads.amazon-adsystem.com
+BLOCK c.amazon-adsystem.com
+BLOCK fls-na.amazon-adsystem.com
+BLOCK ir-na.amazon-adsystem.com
+BLOCK ir-eu.amazon-adsystem.com
+BLOCK s.amazon-adsystem.com
+BLOCK fls-fe.amazon-adsystem.com
+BLOCK fls-eu.amazon-adsystem.com
+
+# ── Chartboost ──────────────────────────────────────────────────
+BLOCK chartboost.com
+BLOCK live.chartboost.com
+BLOCK dfn.chartboost.com
+BLOCK c3.chartboost.com
+BLOCK banner.chartboost.com
+BLOCK sdk.chartboost.com
+BLOCK cdn.chartboost.com
+BLOCK api.chartboost.com
+
+# ── Unity Ads ───────────────────────────────────────────────────
+BLOCK unity3d.com
+BLOCK unityads.unity3d.com
+BLOCK auction.unityads.unity3d.com
+BLOCK config.unityads.unity3d.com
+BLOCK webview.unityads.unity3d.com
+BLOCK mediation.unity3d.com
+BLOCK feedback.unity3d.com
+
+# ── TikTok Ads ──────────────────────────────────────────────────
+BLOCK tiktok.com
+BLOCK analytics.tiktok.com
+BLOCK ads.tiktok.com
+BLOCK mon.tiktok.com
+BLOCK ad.tiktok.com
+BLOCK business.tiktok.com
+BLOCK sg.tiktok.com
+
+# ── ByteDance/TikTok ────────────────────────────────────────────
+BLOCK byteoversea.com
+BLOCK analytics.byteoversea.com
+BLOCK ads.byteoversea.com
+BLOCK mon.byteoversea.com
+BLOCK ibytedtos.com
+BLOCK analytics.ibytedtos.com
+BLOCK ads.ibytedtos.com
+BLOCK mon.ibytedtos.com
+
+# ── Snap Ads ────────────────────────────────────────────────────
+BLOCK ads.snapchat.com
+BLOCK static.ads.snapchat.com
+BLOCK pixel.ads.snapchat.com
+BLOCK cdn.ads.snapchat.com
+BLOCK rtb.ads.snapchat.com
+BLOCK snapads.com
+BLOCK static.snapads.com
+BLOCK pixel.snapads.com
+BLOCK cdn.snapads.com
+
+# ── Snap Tracking ───────────────────────────────────────────────
+BLOCK snapchat.com
+BLOCK tr.snapchat.com
+BLOCK ads.snapchat.com
+BLOCK tr2.snapchat.com
+BLOCK metrics.snapchat.com
+
+# ── Pinterest Ads ───────────────────────────────────────────────
+BLOCK pinterest.com
+BLOCK ads.pinterest.com
+BLOCK log.pinterest.com
+BLOCK pixel.pinterest.com
+BLOCK ct.pinterest.com
+
+# ── Pinterest CDN ───────────────────────────────────────────────
+BLOCK pinimg.com
+BLOCK ads.pinimg.com
+BLOCK i.pinimg.com
+BLOCK s.pinimg.com
+BLOCK static.pinimg.com
+
+# ── LinkedIn Ads ────────────────────────────────────────────────
+BLOCK linkedin.com
+BLOCK ads.linkedin.com
+BLOCK pixel.linkedin.com
+BLOCK beacon.linkedin.com
+BLOCK analytics.linkedin.com
+BLOCK insight.linkedin.com
+
+# ── LinkedIn CDN ────────────────────────────────────────────────
+BLOCK licdn.com
+BLOCK ads.licdn.com
+BLOCK pixel.licdn.com
+
+# ── Microsoft Advertising ───────────────────────────────────────
+BLOCK bingads.com
+BLOCK www.bingads.com
+BLOCK api.bingads.com
+BLOCK ui.bingads.com
+BLOCK static.bingads.com
+
+# ── Microsoft Ads ───────────────────────────────────────────────
+BLOCK microsoft.com
+BLOCK bat.bing.microsoft.com
+BLOCK bat.microsoft.com
+BLOCK ads.microsoft.com
+
+# ── Yandex Ads (RU) ─────────────────────────────────────────────
+BLOCK yandex.ru
+BLOCK an.yandex.ru
+BLOCK mc.yandex.ru
+BLOCK partner.yandex.ru
+BLOCK direct.yandex.ru
+BLOCK advertising.yandex.ru
+
+# ── Yandex Net ──────────────────────────────────────────────────
+BLOCK yandex.net
+BLOCK an.yandex.net
+BLOCK partner.yandex.net
+BLOCK ads.yandex.net
+BLOCK mc.yandex.net
+
+# ── Yandex Ads ──────────────────────────────────────────────────
+BLOCK yandex.com
+BLOCK an.yandex.com
+BLOCK partner.yandex.com
+BLOCK ads.yandex.com
+
+# ── VK Ads ──────────────────────────────────────────────────────
+BLOCK vk.com
+BLOCK ads.vk.com
+BLOCK pixel.vk.com
+BLOCK ads2.vk.com
+
+# ── Mailchimp tracking ──────────────────────────────────────────
+BLOCK mailchimp.com
+BLOCK list.mailchimp.com
+BLOCK pixel.mailchimp.com
+BLOCK beacon.mailchimp.com
+BLOCK track.mailchimp.com
+BLOCK click.mailchimp.com
+BLOCK open.mailchimp.com
+
+# ── SendGrid tracking ───────────────────────────────────────────
+BLOCK sendgrid.net
+BLOCK track.sendgrid.net
+BLOCK click.sendgrid.net
+BLOCK open.sendgrid.net
+BLOCK pixel.sendgrid.net
+
+# ── Klaviyo ─────────────────────────────────────────────────────
+BLOCK klaviyo.com
+BLOCK api.klaviyo.com
+BLOCK cdn.klaviyo.com
+BLOCK pixel.klaviyo.com
+BLOCK track.klaviyo.com
+
+# ── Mailjet ─────────────────────────────────────────────────────
+BLOCK mailjet.com
+BLOCK links.mailjet.com
+BLOCK open.mailjet.com
+BLOCK clicks.mailjet.com
+BLOCK pixel.mailjet.com
+
+# ── Constant Contact ────────────────────────────────────────────
+BLOCK constantcontact.com
+BLOCK tracking.constantcontact.com
+BLOCK pixel.constantcontact.com
+BLOCK click.constantcontact.com
+
+# ── AdRoll ──────────────────────────────────────────────────────
+BLOCK adroll.com
+BLOCK d.adroll.com
+BLOCK s.adroll.com
+BLOCK rtb.adroll.com
+BLOCK pixel.adroll.com
+BLOCK conversion.adroll.com
+BLOCK sync.adroll.com
+
+# ── ReTargeter ──────────────────────────────────────────────────
+BLOCK retargeter.com
+BLOCK pixel.retargeter.com
+BLOCK sync.retargeter.com
+BLOCK ad.retargeter.com
+
+# ── FetchBack ───────────────────────────────────────────────────
+BLOCK fetchback.com
+BLOCK pixel.fetchback.com
+BLOCK ad.fetchback.com
+BLOCK sync.fetchback.com
+
+# ── Perfect Audience ────────────────────────────────────────────
+BLOCK perfect-audience.com
+BLOCK pixel.perfect-audience.com
+BLOCK tag.perfect-audience.com
+BLOCK syn.perfect-audience.com
+BLOCK rtb.perfect-audience.com
+
+# ── SiteScout ───────────────────────────────────────────────────
+BLOCK sitescout.com
+BLOCK pixel.sitescout.com
+BLOCK ad.sitescout.com
+BLOCK sync.sitescout.com
+
+# End of comprehensive ads/tracking blocklist
