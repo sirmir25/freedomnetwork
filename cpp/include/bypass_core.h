@@ -83,6 +83,38 @@ int fn_tls_split3(
     uint8_t *r3, size_t r3_cap, size_t *r3_len
 );
 
+/* ── Fingerprinting (fingerprint.cpp) ─────────────────────────────────────── */
+
+/**
+ * Compute a JA3-style TLS fingerprint from a ClientHello record.
+ * Format: SSLVersion,Ciphers,Extensions,EllipticCurves,PointFormats
+ *
+ * @param data      ClientHello bytes
+ * @param data_len  Input length
+ * @param out       Output buffer for null-terminated fingerprint (>= 256 bytes)
+ * @param out_cap   Capacity of out
+ * @return  Length of fingerprint string, 0 on error
+ */
+size_t fn_ja3_fingerprint(const uint8_t *data, size_t data_len,
+                           char *out, size_t out_cap);
+
+/** Returns true if the ClientHello advertises TLS 1.3 support. */
+bool fn_is_tls13(const uint8_t *data, size_t data_len);
+
+/* ── Socket window helpers (window.cpp) ───────────────────────────────────── */
+
+/** Set SO_RCVBUF to `size` on socket `fd` to shrink the advertised TCP window. */
+int fn_shrink_window(int fd, int size);
+
+/** Restore SO_RCVBUF to the system default on socket `fd`. */
+int fn_restore_window(int fd);
+
+/** Enable or disable TCP_NODELAY on socket `fd`. */
+int fn_set_nodelay(int fd, int enable);
+
+/** Query the current SO_RCVBUF of socket `fd`. */
+int fn_get_rcvbuf(int fd);
+
 #ifdef __cplusplus
 } /* extern "C" */
 #endif

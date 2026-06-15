@@ -4,11 +4,19 @@ fn main() {
     println!("cargo:rerun-if-changed=cpp/src/tls.cpp");
     println!("cargo:rerun-if-changed=cpp/src/http.cpp");
     println!("cargo:rerun-if-changed=cpp/src/multi_split.cpp");
+    println!("cargo:rerun-if-changed=cpp/src/fingerprint.cpp");
+    println!("cargo:rerun-if-changed=cpp/src/window.cpp");
     println!("cargo:rerun-if-changed=cpp/include/bypass_core.h");
 
     cc::Build::new()
         .cpp(true)
-        .files(["cpp/src/tls.cpp", "cpp/src/http.cpp", "cpp/src/multi_split.cpp"])
+        .files([
+            "cpp/src/tls.cpp",
+            "cpp/src/http.cpp",
+            "cpp/src/multi_split.cpp",
+            "cpp/src/fingerprint.cpp",
+            "cpp/src/window.cpp",
+        ])
         .include("cpp/include")
         .flag_if_supported("-std=c++17")
         .flag_if_supported("-O2")
