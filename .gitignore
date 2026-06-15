@@ -7,3 +7,8 @@ __pycache__/
 ss-config.json
 privatekey
 publickey
+vpngen/fn-vpn
+vpngen/.dub/
+vpngen/__dummy.html
+*.o
+*.di
