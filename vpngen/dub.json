@@ -1,0 +1,13 @@
+{
+    "name":        "fn-vpn",
+    "description": "VPN client config generator — part of FreedomNet",
+    "version":     "0.2.0",
+    "license":     "MIT",
+    "authors":     ["sirmir25"],
+    "targetType":  "executable",
+    "targetName":  "fn-vpn",
+    "sourcePaths": ["source"],
+    "mainSourceFile": "source/app.d",
+    "buildOptions": ["releaseMode", "optimize"],
+    "dflags-ldc":  ["-O2", "-linkonce-templates"]
+}
