@@ -1,0 +1,9 @@
+target/
+__pycache__/
+*.pyc
+.DS_Store
+*.ovpn
+*.conf
+ss-config.json
+privatekey
+publickey
