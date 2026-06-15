@@ -3,6 +3,8 @@ mod doh;
 mod ffi;
 mod pac;
 mod proxy;
+mod rules;
+mod stats;
 
 use std::{net::SocketAddr, process::Command};
 
@@ -120,6 +122,10 @@ async fn run_proxy(listen: SocketAddr, pac_listen: SocketAddr, no_pac: bool) -> 
             }
         });
     }
+    // Pre-load bypass rules (logs count on first access)
+    let _ = rules::Rules::global();
+    // Start periodic stats reporter (every 30 seconds)
+    stats::spawn_reporter(30);
     proxy::serve(proxy::ProxyConfig { listen }).await
 }
 

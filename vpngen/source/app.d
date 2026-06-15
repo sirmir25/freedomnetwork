@@ -17,17 +17,20 @@ import std.string  : empty, toLower;
 import openvpn     : OpenVpnConfig,    generate;
 import wireguard   : WireGuardConfig,  generate;
 import shadowsocks : ShadowsocksConfig, generate;
+import checker     : runChecker;
 
 void printHelp()
 {
-    writeln("fn-vpn — FreedomNet VPN config generator");
+    writeln("fn-vpn — FreedomNet VPN config generator & domain checker");
     writeln();
     writeln("Commands:");
     writeln("  openvpn     --server <host> [--port 1194] [--tcp] [--out client.ovpn]");
     writeln("  wireguard   --server <host:port> --pubkey <key> [--address 10.0.0.2/32] [--out wg0.conf]");
     writeln("  shadowsocks --server <host> --password <pw> [--port 8388] [--method aes-256-gcm] [--out ss.json]");
+    writeln("  check       <domain1> [domain2] ...   Test direct TCP reachability");
     writeln();
     writeln("Examples:");
+    writeln("  fn-vpn check google.com youtube.com bbc.com rutracker.org");
     writeln("  fn-vpn openvpn --server vpn.example.com --port 1194");
     writeln("  fn-vpn wireguard --server 1.2.3.4:51820 --pubkey abc123==");
     writeln("  fn-vpn shadowsocks --server 1.2.3.4 --password s3cr3t --method chacha20-ietf-poly1305");
@@ -49,6 +52,8 @@ int main(string[] args)
             return cmdWireGuard(args[2..$]);
         case "shadowsocks":
             return cmdShadowsocks(args[2..$]);
+        case "check":
+            return runChecker(args[2..$]);
         case "-h", "--help", "help":
             printHelp();
             return 0;

@@ -17,6 +17,13 @@ extern "C" {
         r2: *mut u8, r2_cap: usize, r2_len: *mut usize,
     ) -> c_int;
 
+    fn fn_tls_split3(
+        data: *const u8, data_len: usize,
+        r1: *mut u8, r1_cap: usize, r1_len: *mut usize,
+        r2: *mut u8, r2_cap: usize, r2_len: *mut usize,
+        r3: *mut u8, r3_cap: usize, r3_len: *mut usize,
+    ) -> c_int;
+
     fn fn_is_http(data: *const u8, len: usize) -> bool;
 
     fn fn_mangle_http(
@@ -65,6 +72,33 @@ pub fn tls_split(data: &[u8]) -> Option<(Vec<u8>, Vec<u8>)> {
     r1.truncate(r1_len);
     r2.truncate(r2_len);
     Some((r1, r2))
+}
+
+/// Splits a TLS ClientHello into THREE TLS records for maximum DPI evasion.
+///
+/// Record 1 = only the HandshakeType byte, record 2 = up to SNI midpoint,
+/// record 3 = SNI midpoint to end.  Falls back to `tls_split` on failure.
+pub fn tls_split3(data: &[u8]) -> Option<(Vec<u8>, Vec<u8>, Vec<u8>)> {
+    let cap = data.len() + 16;
+    let mut r1 = vec![0u8; cap];
+    let mut r2 = vec![0u8; cap];
+    let mut r3 = vec![0u8; cap];
+    let (mut n1, mut n2, mut n3) = (0usize, 0usize, 0usize);
+
+    let rc = unsafe {
+        fn_tls_split3(
+            data.as_ptr(), data.len(),
+            r1.as_mut_ptr(), cap, &mut n1,
+            r2.as_mut_ptr(), cap, &mut n2,
+            r3.as_mut_ptr(), cap, &mut n3,
+        )
+    };
+
+    if rc != 0 { return None; }
+    r1.truncate(n1);
+    r2.truncate(n2);
+    r3.truncate(n3);
+    Some((r1, r2, r3))
 }
 
 /// Returns true if `data` begins with a recognised HTTP method.

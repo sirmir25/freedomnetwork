@@ -1,5 +1,6 @@
 target/
 __pycache__/
+*.py
 *.pyc
 .DS_Store
 *.ovpn

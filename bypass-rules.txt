@@ -1,0 +1,59 @@
+# FreedomNet bypass-rules.txt
+#
+# Format:  ACTION  domain
+#
+#   PROXY   → route through DPI-bypass pipeline (default for unlisted)
+#   DIRECT  → connect directly, skip bypass
+#   BLOCK   → drop connection (ad/tracker blocking)
+#
+# Matching is suffix-based: a rule for "example.com" also applies to
+# "sub.example.com", "a.b.example.com", etc.
+#
+# ── LAN / local — go direct ─────────────────────────────────────────────────
+DIRECT  localhost
+DIRECT  127.0.0.1
+DIRECT  ::1
+
+# ── Russia-blocked sites — always proxy ─────────────────────────────────────
+PROXY   rutracker.org
+PROXY   rutor.info
+PROXY   nnm-club.me
+PROXY   kinozal.tv
+PROXY   meduza.io
+PROXY   novayagazeta.ru
+PROXY   thepiratebay.org
+PROXY   instagram.com
+PROXY   facebook.com
+PROXY   twitter.com
+PROXY   x.com
+PROXY   bbc.com
+PROXY   bbc.co.uk
+PROXY   svoboda.org
+PROXY   currenttime.tv
+
+# ── China-blocked (GFW) ──────────────────────────────────────────────────────
+PROXY   google.com
+PROXY   youtube.com
+PROXY   wikipedia.org
+PROXY   reddit.com
+PROXY   discord.com
+PROXY   discordapp.com
+PROXY   twitch.tv
+PROXY   medium.com
+PROXY   quora.com
+
+# ── Iran-blocked ────────────────────────────────────────────────────────────
+PROXY   telegram.org
+PROXY   t.me
+PROXY   whatsapp.com
+PROXY   soundcloud.com
+
+# ── Common ad/tracker domains — block ───────────────────────────────────────
+BLOCK   doubleclick.net
+BLOCK   googlesyndication.com
+BLOCK   googleadservices.com
+BLOCK   adservice.google.com
+BLOCK   ads.yahoo.com
+BLOCK   advertising.com
+BLOCK   scorecardresearch.com
+BLOCK   omtrdc.net

@@ -1,6 +1,6 @@
 [package]
 name = "freedomnet"
-version = "0.2.0"
+version = "0.3.0"
 edition = "2021"
 description = "DPI bypass proxy + VPN config generator. No VPN server needed for proxy mode."
 license = "MIT"
@@ -19,6 +19,9 @@ serde_json = "1"
 tracing    = "0.1"
 tracing-subscriber = { version = "0.3", features = ["env-filter"] }
 anyhow     = "1"
+
+[dev-dependencies]
+tempfile = "3"
 
 [build-dependencies]
 cc = "1"

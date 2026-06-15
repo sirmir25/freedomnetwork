@@ -62,8 +62,26 @@ size_t fn_mangle_http(
 
 /* ── Info ─────────────────────────────────────────────────────────────────── */
 
-/** Null-terminated version string, e.g. "0.2.0". */
+/** Null-terminated version string, e.g. "0.3.0". */
 const char *fn_version(void);
+
+/* ── Advanced split ───────────────────────────────────────────────────────── */
+
+/**
+ * Split ClientHello into THREE TLS records for maximum DPI disruption.
+ * Record layout:
+ *   r1 = first 1 byte of Handshake payload  (HandshakeType only)
+ *   r2 = bytes from byte-2 up to SNI midpoint
+ *   r3 = SNI midpoint to end
+ *
+ * @return 0 on success, -1 not a ClientHello, -2 buffer too small
+ */
+int fn_tls_split3(
+    const uint8_t *data,   size_t data_len,
+    uint8_t *r1, size_t r1_cap, size_t *r1_len,
+    uint8_t *r2, size_t r2_cap, size_t *r2_len,
+    uint8_t *r3, size_t r3_cap, size_t *r3_len
+);
 
 #ifdef __cplusplus
 } /* extern "C" */
